@@ -28,6 +28,7 @@ public class Calculator {
 	 * get the precedence of each standard operator
 	 *
 	 * @param	operator a given operator
+	 * @param	inverseOrder a boolean equals to true if one wants to inverse precedence
 	 * @return	the the operator's precedence
 	 */
 	static int precedence( String operator, boolean inverseOrder ) {
