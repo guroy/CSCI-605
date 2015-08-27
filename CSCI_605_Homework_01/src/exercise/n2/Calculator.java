@@ -20,7 +20,6 @@ public class Calculator {
 	
 	public static void main ( String args [] ) { // main program		
 		aLine.add("2"); aLine.add("+"); aLine.add("3"); aLine.add("*"); aLine.add("4");
-		aLine.add("*"); aLine.add("3"); aLine.add("*"); aLine.add("4");
 		System.out.println( compute( ) );
 	}
 
@@ -31,24 +30,24 @@ public class Calculator {
 	 * @param	operator a given operator
 	 * @return	the the operator's precedence
 	 */
-	static int precedence( String operator ) {
+	static int precedence( String operator, boolean inverseOrder ) {
 		int res = 0;
 		
 		switch ( operator ) {
 		case "+":
-			res = 1;
+			res = ( inverseOrder ) ? 5 : 1;
 			break;
 		case "-":
-			res = 2;
+			res = ( inverseOrder ) ? 4 : 2;
 			break;
 		case "%":
 			res = 3;
 			break;
 		case "*":
-			res = 4;
+			res = ( inverseOrder ) ? 2 : 4;
 			break;
 		case "/":
-			res = 5;
+			res = ( inverseOrder ) ? 1 : 5;
 			break;
 		default:
 			break;	
@@ -69,10 +68,11 @@ public class Calculator {
 			curPrec; // the current precedence
 		String tmpRes; // store a temporary result
 
-		for ( curPrec = 5; curPrec >= 1; curPrec -= 1 ) {
+		// compute operators one by one depending on precedence
+		for ( curPrec = 5; curPrec >= 1; curPrec -= 1 ) { 
 			elt = 1;
 			while ( elt < size - 1 ) {
-				if ( precedence( aLine.get( elt ) ) ==  curPrec ) {
+				if ( precedence( aLine.get( elt ), false ) ==  curPrec ) {
 					tmpRes = computeSingleOperation( aLine.get( elt - 1 ), aLine.get( elt ), aLine.get( elt + 1 ) );
 					// let's replace a simple operation ( num ope num ) by its result ( res )
 					aLine.set( elt, tmpRes );
