@@ -1,15 +1,16 @@
-package exercise.n2;
+package exercise.n1;
 
 import java.util.Vector;
 
 /**
-* A simple calculator
+* Add ’^’ and ’(’ ’)’ to the calculator from HW 1.2
 *
 *
-* @version   $Id: Calculator.java,v 1.0 2015/08/25 $
+* @version   $Id: Calculator.java,v 1.0 2015/09/01 $
+* @author    Gurvan Lecuyer
 * @author    Guillaume Roy
 *
-* Revisions:
+* Revisions: 
 *
 * 	Initial revision
 *
@@ -19,10 +20,28 @@ public class Calculator {
 	static Vector<String> aLine = new Vector<String>(); // the hardcoded expression
 	
 	public static void main ( String args [] ) { // main program		
-		aLine.add("2"); aLine.add("+"); aLine.add("3"); aLine.add("*"); aLine.add("4");
+		for ( String s: args ) {
+			aLine.add( handleTerminalAsteriskIssue( s ) );
+        }
+		
+		System.out.println( aLine );
 		System.out.println( compute( ) );
 	}
 
+	
+	/**
+	 * Convert terminal '\*' form to understandable '*' multiplication sign
+	 *
+	 * @param	arg a terminal argument
+	 * @return	the argument having changed '\*' by '*'
+	 */
+	static String handleTerminalAsteriskIssue( String arg ) { // Asterisk et périls
+		// when typing "java Calculator arg1 arg2...", the terminal replace "*" with the list
+		// of files in the current directory as it was told to do. That's why we use escape form '\*'.
+		arg = arg.equals("\\*") ? "*" :  arg;
+		return arg;
+	}
+	
 	
 	/**
 	 * get the precedence of each standard operator
