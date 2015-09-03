@@ -5,6 +5,7 @@ import java.util.Vector;
 
 /**
 * Add ’^’ and ’(’ ’)’ to the calculator from HW 1.2
+* compute the arguments given as an expression
 *
 *
 * @version   $Id: Calculator.java,v 1.0 2015/09/01 $
@@ -32,22 +33,60 @@ public class Calculator {
 	
 	public static void main ( String args [] ) { // main program
 		//get the list of arguments from terminal
-		Vector<String> myArgs = new Vector<String>(Arrays.asList( handleTerminalIssues( args ) ));
+		Vector<String> myArgs = new Vector<String>(Arrays.asList( args ) );
 		//create expression with such list
-		//Calculator myExpression = new Calculator( myArgs ) ;
+		Calculator myExpression = new Calculator( myArgs ) ;
+		myExpression.handleTerminalIssues( );
 		
-		System.out.println( myArgs );
-		System.out.println( computeSingleParenthesisExpression( myArgs ) );
+		System.out.println( myExpression.myArguments );
+		
+		System.out.println( myExpression.computeExpression( ) );
 	}
 
+	
+	/**
+	 * get the result of a complexe expression with multiple parenthesis depth
+	 *
+	 * @return	the result
+	 */
+	int computeExpression( ) {
+		int size = this.myArguments.size(),
+			indexBeginning = 0,
+			indexEnd,
+			i = 0;
+		
+		while ( i < size ) {
+			// if there are no parenthesis, compute simple expression
+			if ( !this.myArguments.contains( "(" ) && !this.myArguments.contains( ")" ) ) {
+				return Integer.parseInt( computeSingleParenthesisExpression( this.myArguments ) );
+			}
+			
+			// If a parenthesis is opened, store its index
+			if ( this.myArguments.get( i ).equals( "(" ) ) {
+				indexBeginning = i++;
+			} else if ( this.myArguments.get( i ).equals( ")" ) ) {
+				indexEnd = i;
+				// locate and compute single parenthesis in the expression
+				this.myArguments.set( indexBeginning, computeSingleParenthesisExpression( copyFromTo( indexBeginning, indexEnd ) ) );
+				this.removeFromTo( indexBeginning, indexEnd );
+				i = 0; // try again with parenthesis w/ lower depth
+			} else {
+				i++;
+			}
+		}
+		
+		return Integer.parseInt( this.myArguments.get( 0 ) );
+	}
+	
 	
 	/**
 	 * get the result of an operation of form ( X op Y ... op Z )
 	 *
 	 * @return	the result
 	 */
-	 static int computeSingleParenthesisExpression( Vector<String> expression ) {
+	 static String computeSingleParenthesisExpression( Vector<String> expression ) {
 		Vector<String> aLine = new Vector<String>( expression );
+		
 		int elt, // an iterator
 			size = aLine.size( ),
 			curPrec, // the current precedence
@@ -60,7 +99,6 @@ public class Calculator {
 				elt = size - 2;
 				while ( elt > 0 ) {
 					if ( precedence( aLine.get( elt ), false ) ==  curPrec ) {
-						System.out.println(aLine);
 						tmpRes = computeSingleOperation( aLine.get( elt - 1 ), aLine.get( elt ), aLine.get( elt + 1 ) );
 						// let's replace a simple operation ( num ope num ) by its result ( res )
 						aLine.set( elt - 1, tmpRes );
@@ -76,7 +114,6 @@ public class Calculator {
 				elt = 1;
 				while ( elt < size - 1 ) {
 					if ( precedence( aLine.get( elt ), false ) ==  curPrec ) {
-						System.out.println(aLine);
 						tmpRes = computeSingleOperation( aLine.get( elt - 1 ), aLine.get( elt ), aLine.get( elt + 1 ) );
 						// let's replace a simple operation ( num ope num ) by its result ( res )
 						aLine.set( elt, tmpRes );
@@ -92,28 +129,55 @@ public class Calculator {
 			}
 		}
 			
-		return Integer.parseInt( aLine.get( 0 ) );
+		return aLine.get( 0 );
 	}
-	 
-	 
 	
+	 
+	 /**
+	 * remove parts of a vector
+	 *
+	 * @param	from the index to begin the removal
+	 * @param	to the index to end the removal
+	 */
+	 void removeFromTo( int from, int to) {
+		 for ( int i = from ; i < to; i += 1 ) {
+			 this.myArguments.removeElementAt( from + 1);
+		 }
+	 }
+	 
+	 
+	 /**
+	 * create parts of a vector
+	 *
+	 * @param	from the index to begin the creation
+	 * @param	to the index to end the creation
+	 * @return	the created vector
+	 */
+	 Vector<String> copyFromTo( int from, int to) {
+		 Vector<String> myCopy = new Vector<String>();
+		 
+		 for ( int i = from + 1; i < to; i += 1 ) {
+			 myCopy.add( this.myArguments.get( i ) );
+		 }
+		 
+		 return myCopy;
+	 }
+	 
 	
 	/**
 	 * Convert terminal '\*' , '\(' and '\)' form to understandable '*' , '(' and ')'
 	 *
-	 * @param	args the terminal arguments
-	 * @return	the arguments list having changed '\x' by 'x'
 	 */
-	static String[] handleTerminalIssues( String[] args ) {
+	void handleTerminalIssues( ) {
 		// when typing "java Calculator arg1 arg2...", the terminal replace "*" with the list
 		// of files in the current directory as it was told to do. That's why we use escape form '\*'.
-		for ( String s: args ) {
-			s = s.equals("\\*") ? "*" : s;
-			s = s.equals("\\(") ? "(" : s;
-			s = s.equals("\\)") ? ")" : s;
-		}
+		int size = this.myArguments.size();
 		
-		return args;
+		for ( int i = 0; i < size; i += 1 ) {
+			if ( this.myArguments.get( i ).equals("\\*") ) {
+				this.myArguments.set( i, "*" );
+			}
+		}
 	}
 	
 	
@@ -163,32 +227,7 @@ public class Calculator {
 		return res;
 	}
 	
-	
-//	int computeExpression( ) {
-//		Vector<String> tmpExpression = new Vector<String>( );
-//		boolean isASimpleParenthesisExpression = false;
-//		int length = this.myArguments.length,
-//			indexBeginning,
-//			indexEnd;
-//		
-//		for ( int i = 0; i < length ; i += 1 ) {
-//			if ( isASimpleParenthesisExpression ) {
-//				if ( this.myArguments[i].equals( "(" ) ) {
-//					return 0;
-//				} else if ( this.myArguments[i].equals( ")" ) ) {
-//					indexEnd = i;
-//				}
-//			} else {
-//				
-//			}
-//		}
-//		
-//		return isASimpleParenthesisExpression;
-//	}
-	
-	
-	
-	
+		
 	/**
 	 * get the result of a single operation
 	 *
