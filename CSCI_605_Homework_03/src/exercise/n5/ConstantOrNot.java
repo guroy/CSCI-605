@@ -1,5 +1,7 @@
 package exercise.n5;
 
+import java.util.Vector;
+
 /**
  * Homework 3 exercise 5, comment code
  *
