@@ -18,7 +18,7 @@ public class AA extends A {
 		aInt = 11;
 	}
 	public int intPlusPlus()      {
-		return ++aInt;
+		return ++super.aInt; //just add super so that the aInt refers to the parent class aInt
 	}
 	public String toString()      {
 		return this.getClass().getName() + ": " + aInt;
