@@ -1,6 +1,9 @@
 package exercise.n5;
 
-import java.util.Vector;
+import java.util.Vector;	// what does this line do?
+							// it imports the code necessary to create and use Vector objects
+							// from the java.util.Vector class
+
 
 /**
  * Homework 3 exercise 5, comment code
@@ -20,8 +23,12 @@ class ConstantOrNot {
 
 	public void doTheJob() {
 		// aInt = 3; why would this fail?
+		// as aInt is defined as a final variable, it is supposed to have a constant value. Thus it cannot be modified.
 		// aString = aString + "abc"; why would this fail?
-		aVector.add("abc");             // why does this work?
+		// aString is a literal String. It has a primitive type so it is supposed to have a constant value. Thus it cannot be modified.
+		aVector.add("abc");	// why does this work?
+							// aVector defines a final object. It is a reference to the object. As it is final, only the reference
+							// can't be modified, but we can still change its attributes.
 	}
 
 	public static void main( String args[] ) {
