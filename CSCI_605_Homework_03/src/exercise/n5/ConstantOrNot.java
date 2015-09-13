@@ -17,9 +17,11 @@ import java.util.Vector;	// what does this line do?
 
 class ConstantOrNot {
 
+	@SuppressWarnings("unused")
 	private final int aInt = 1;
+	@SuppressWarnings("unused")
 	private final String aString = "abc";
-	private final Vector aVector = new Vector();
+	private final Vector<String> aVector = new Vector<String>();
 
 	public void doTheJob() {
 		// aInt = 3; why would this fail?
