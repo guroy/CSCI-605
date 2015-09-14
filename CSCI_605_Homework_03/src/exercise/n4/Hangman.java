@@ -87,11 +87,14 @@ public class Hangman
 				res = buf.readLine();
 				count++;
 			}
+			
+			buf.close();
 		}
 		catch(IOException ex)
 		{
 			ex.printStackTrace();
 		}
+		
 		return res;
 	}
 
@@ -118,6 +121,7 @@ public class Hangman
 		Scanner reader = new Scanner(System.in);
 		char c = reader.next().charAt(0);
 		checkLetter(c);
+		reader.close();
 	}
 
 	void checkLetter(char a)
