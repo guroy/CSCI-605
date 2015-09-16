@@ -1,15 +1,16 @@
+import java.util.Arrays;
 
 public class Connect4Field implements Connect4FieldInterface {
+	static final int BOARD_WIDTH = 25;
+	static final int BOARD_HEIGHT = 9;
+	
 	char[][] board;
-	Player player1, player2;
+	PlayerInterface player1;
+	PlayerInterface player2;
 	boolean isPlayer1Turn;
 	
-	public Connect4Field(char[][] board, Player player1, Player player2, boolean isPlayer1Turn) {
+	public Connect4Field() {
 		super();
-		this.board = board;
-		this.player1 = player1;
-		this.player2 = player2;
-		this.isPlayer1Turn = isPlayer1Turn;
 	}
 
 	@Override
@@ -38,8 +39,43 @@ public class Connect4Field implements Connect4FieldInterface {
 
 	@Override
 	public void init(PlayerInterface playerA, PlayerInterface playerB) {
-		// TODO Auto-generated method stub
+		char[][] gameBoard = new char[BOARD_WIDTH][BOARD_HEIGHT];
+		int thin = 0;
+		
+		// create game board
+		for (int j = 0; j < BOARD_HEIGHT; j++)
+		{
+			for (int i = 0; i < BOARD_WIDTH ; i++)
+			{
+				if(i>=thin && i<BOARD_WIDTH-thin)
+					gameBoard[i][j] = 'o';
+				else
+					gameBoard[i][j] = ' ';					
+			}
+			
+			thin++;
+		}
+		
+		// modify attributes in the instance of Connect4Field
+		board = gameBoard;
+		player1 = playerA;
+		player2 = playerB;
+		isPlayer1Turn = true;
+	}
 
+	@Override
+	public String toString() {
+		String displayBoard = "";
+		for (int j = 0; j < BOARD_HEIGHT; j++)
+		{
+			for (int i = 0; i < BOARD_WIDTH ; i++)
+			{
+				displayBoard += board[i][j];					
+			}
+			
+			displayBoard += '\n';
+		}
+		return displayBoard;
 	}
 
 	@Override

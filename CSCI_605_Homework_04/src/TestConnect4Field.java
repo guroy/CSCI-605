@@ -2,8 +2,8 @@
 public class TestConnect4Field 
 {
 	public Connect4Field aConnect4Field = new Connect4Field();
-	public Player aPlayer = new Player(aConnect4Field, "A", '+');
-	public Player bPlayer = new Player(aConnect4Field, "B", '*');
+//	public Player aPlayer = new Player(aConnect4Field, "A", '+');
+//	public Player bPlayer = new Player(aConnect4Field, "B", '*');
 	
 	public void dropTest( int column ) 
 	{
@@ -11,23 +11,26 @@ public class TestConnect4Field
 				   column + ": " 	   +
 				   aConnect4Field.checkIfPiecedCanBeDroppedIn(column));
 	}
-	public void testIt() 
-	{
-		aConnect4Field = new Connect4Field();
-		System.out.println(aConnect4Field);
-		dropTest(-1);
-		dropTest(0);
-		dropTest(1);
-		aConnect4Field.dropPieces(1, '+');
-		System.out.println(aConnect4Field);
-		aConnect4Field.dropPieces(1, '*');
-		System.out.println(aConnect4Field);
-		aConnect4Field.didLastMoveWin();
-		aConnect4Field.isItaDraw();
-		aConnect4Field.init(aPlayer, bPlayer);
-	}
+//	public void testIt() 
+//	{
+//		aConnect4Field = new Connect4Field();
+//		System.out.println(aConnect4Field);
+//		dropTest(-1);
+//		dropTest(0);
+//		dropTest(1);
+//		aConnect4Field.dropPieces(1, '+');
+//		System.out.println(aConnect4Field);
+//		aConnect4Field.dropPieces(1, '*');
+//		System.out.println(aConnect4Field);
+//		aConnect4Field.didLastMoveWin();
+//		aConnect4Field.isItaDraw();
+//		aConnect4Field.init(aPlayer, bPlayer);
+//	}
 	public static void main( String[] args ) 
 	{
-		new TestConnect4Field().testIt();
+//		new TestConnect4Field().testIt();
+		Connect4Field banane = new Connect4Field();
+		banane.init(null, null);
+		System.out.println(banane);
 	}
 }
