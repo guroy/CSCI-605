@@ -1,5 +1,16 @@
 
 public class Connect4Field implements Connect4FieldInterface {
+	char[][] board;
+	Player player1, player2;
+	boolean isPlayer1Turn;
+	
+	public Connect4Field(char[][] board, Player player1, Player player2, boolean isPlayer1Turn) {
+		super();
+		this.board = board;
+		this.player1 = player1;
+		this.player2 = player2;
+		this.isPlayer1Turn = isPlayer1Turn;
+	}
 
 	@Override
 	public boolean checkIfPiecedCanBeDroppedIn(int column) {
