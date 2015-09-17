@@ -1,4 +1,3 @@
-import java.util.Arrays;
 
 public class Connect4Field implements Connect4FieldInterface {
 	static final int BOARD_WIDTH = 25;
@@ -8,15 +7,38 @@ public class Connect4Field implements Connect4FieldInterface {
 	PlayerInterface player1;
 	PlayerInterface player2;
 	boolean isPlayer1Turn;
+	Position lastMovePosition;
+	
+	// store the position of a piece in the board
+	class Position { 
+		int X;
+		int Y;
+	}
 	
 	public Connect4Field() {
 		super();
+		
+		board = new char[BOARD_WIDTH][BOARD_HEIGHT];
+		int thin = 0;
+		
+		// create game board
+		for (int j = 0; j < BOARD_HEIGHT; j++)
+		{
+			for (int i = 0; i < BOARD_WIDTH ; i++)
+			{
+				if(i>=thin && i<BOARD_WIDTH-thin)
+					board[i][j] = 'o';
+				else
+					board[i][j] = ' ';					
+			}
+			
+			thin++;
+		}
 	}
 
 	@Override
 	public boolean checkIfPiecedCanBeDroppedIn(int column) {
-		// TODO Auto-generated method stub
-		return false;
+		return board[0][column] == 'o';
 	}
 
 	@Override
@@ -27,8 +49,7 @@ public class Connect4Field implements Connect4FieldInterface {
 
 	@Override
 	public boolean didLastMoveWin() {
-		// TODO Auto-generated method stub
-		return false;
+		return 0 == lastMovePosition.X;
 	}
 
 	@Override
@@ -38,29 +59,12 @@ public class Connect4Field implements Connect4FieldInterface {
 	}
 
 	@Override
-	public void init(PlayerInterface playerA, PlayerInterface playerB) {
-		char[][] gameBoard = new char[BOARD_WIDTH][BOARD_HEIGHT];
-		int thin = 0;
-		
-		// create game board
-		for (int j = 0; j < BOARD_HEIGHT; j++)
-		{
-			for (int i = 0; i < BOARD_WIDTH ; i++)
-			{
-				if(i>=thin && i<BOARD_WIDTH-thin)
-					gameBoard[i][j] = 'o';
-				else
-					gameBoard[i][j] = ' ';					
-			}
-			
-			thin++;
-		}
-		
+	public void init(PlayerInterface playerA, PlayerInterface playerB) {		
 		// modify attributes in the instance of Connect4Field
-		board = gameBoard;
 		player1 = playerA;
 		player2 = playerB;
 		isPlayer1Turn = true;
+		lastMovePosition = new Position();
 	}
 
 	@Override

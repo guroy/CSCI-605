@@ -3,9 +3,9 @@ public class Player implements PlayerInterface
 {
 	char GamePiece;
 	String Name;
-	Connect4FieldIntervace field;
+	Connect4FieldInterface field;
 	
-	Player(Connect4FieldIntervace theField, String name, char gamePiece)
+	Player(Connect4FieldInterface theField, String name, char gamePiece)
 	{
 		field = theField;
 		Name = name;
