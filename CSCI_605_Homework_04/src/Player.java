@@ -1,21 +1,33 @@
 
-public class Player implements PlayerInterface {
+public class Player implements PlayerInterface 
+{
+	char GamePiece;
+	String Name;
+	Connect4FieldIntervace field;
+	
+	Player(Connect4FieldIntervace theField, String name, char gamePiece)
+	{
+		field = theField;
+		Name = name;
+		GamePiece = gamePiece;
+	}
+	
 
 	@Override
-	public char getGamePiece() {
-		// TODO Auto-generated method stub
-		return 0;
+	public char getGamePiece()
+	{
+		return GamePiece;
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getName() 
+	{
+		return Name;
 	}
 
 	@Override
-	public int nextMove() {
-		// TODO Auto-generated method stub
+	public int nextMove() 
+	{
 		return 0;
 	}
 
