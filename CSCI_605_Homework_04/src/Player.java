@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Player implements PlayerInterface 
 {
@@ -26,9 +27,19 @@ public class Player implements PlayerInterface
 	}
 
 	@Override
-	public int nextMove() 
+	public int nextMove()
 	{
-		return 0;
+		return askLetter();
+	}
+	
+
+	int askLetter()
+	{
+		System.out.println("Enter the column where to place the piece : ");
+		Scanner reader = new Scanner(System.in);
+		int c = reader.next().charAt(0);
+		reader.close();
+		return c;
 	}
 
 }

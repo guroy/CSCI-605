@@ -7,6 +7,7 @@ public class Connect4Field implements Connect4FieldInterface {
 	PlayerInterface player1;
 	PlayerInterface player2;
 	boolean isPlayer1Turn;
+	boolean endgame;
 	Position lastMovePosition;
 	
 	// store the position of a piece in the board
@@ -17,6 +18,7 @@ public class Connect4Field implements Connect4FieldInterface {
 	
 	public Connect4Field() {
 		super();
+		endgame = false;
 		
 		board = new char[BOARD_WIDTH][BOARD_HEIGHT];
 		int thin = 0;
@@ -37,29 +39,56 @@ public class Connect4Field implements Connect4FieldInterface {
 	}
 
 	@Override
-	public boolean checkIfPiecedCanBeDroppedIn(int column) {
+	public boolean checkIfPiecedCanBeDroppedIn(int column) 
+	{
 		return board[0][column] == 'o';
 	}
 
 	@Override
-	public void dropPieces(int column, char gamePiece) {
-		// TODO Auto-generated method stub
-
+	public void dropPieces(int column, char gamePiece) 
+	{
+		int i = 0;
+		char buf;
+		if(column >= 0 && column < BOARD_WIDTH)
+		{
+			buf = board[i][column];
+			while(buf == 'o')
+			{
+				buf = board[i][column];
+				i++;
+			}
+			board[i][column] = gamePiece;
+			lastMovePosition.X = i;
+			lastMovePosition.Y = column;
+		}
+		else
+		{
+			System.out.println("dropPieces wrong input : column : (" + column + ") is out of range");
+		}
 	}
 
 	@Override
-	public boolean didLastMoveWin() {
+	public boolean didLastMoveWin() 
+	{
 		return 0 == lastMovePosition.X;
 	}
 
 	@Override
-	public boolean isItaDraw() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isItaDraw() 
+	{
+		for(int i = 0; i < BOARD_WIDTH; i++)
+		{
+			if(checkIfPiecedCanBeDroppedIn(i))
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
-	public void init(PlayerInterface playerA, PlayerInterface playerB) {		
+	public void init(PlayerInterface playerA, PlayerInterface playerB)
+	{		
 		// modify attributes in the instance of Connect4Field
 		player1 = playerA;
 		player2 = playerB;
@@ -83,9 +112,69 @@ public class Connect4Field implements Connect4FieldInterface {
 	}
 
 	@Override
-	public void playTheGame() {
-		// TODO Auto-generated method stub
-
+	public void playTheGame()
+	{
+		int indexPlay;
+		while(!endgame)
+		{
+			toString();
+			if(isItaDraw())
+			{
+				endgame = true;
+			}
+			else
+			{
+				if(isPlayer1Turn)
+				{
+					System.out.println("Player 1 turn,");
+					indexPlay = player1.nextMove();
+					if(checkIfPiecedCanBeDroppedIn(indexPlay))
+					{
+						dropPieces(indexPlay,player1.getGamePiece());
+						if(didLastMoveWin())
+						{
+							endgame = true;
+							System.out.println("Player 1 win !");
+							break;
+						}
+						else
+						{
+							isPlayer1Turn = false;
+						}
+					}
+					else
+					{
+						System.out.println("You can't place a piece in this column ! play again");
+						continue;
+					}
+				}
+				else
+				{
+					System.out.println("Player 1 turn,");
+					indexPlay = player2.nextMove();
+					if(checkIfPiecedCanBeDroppedIn(indexPlay))
+					{
+						dropPieces(indexPlay,player2.getGamePiece());
+						if(didLastMoveWin())
+						{
+							endgame = true;
+							System.out.println("Player 2 win !");
+							break;
+						}
+						else
+						{
+							isPlayer1Turn = true;
+						}
+					}
+					else
+					{
+						System.out.println("You can't place a piece in this column ! play again");
+						continue;
+					}
+				}
+			}
+			
+		}
 	}
 
 }
