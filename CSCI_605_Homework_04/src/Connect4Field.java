@@ -83,90 +83,85 @@ public class Connect4Field implements Connect4FieldInterface {
 			x0 = Math.max(0, lastMovePosition.X - 1),
 			x1 = Math.min(lastMovePosition.X + 1, BOARD_WIDTH - 1);
 
-		here:
-
-			for (int j = y0; j <= y1; j++) {
-				for (int i = x0; i <= x1; i++) {
-					if (i == lastMovePosition.X && j == lastMovePosition.Y || board[j][i] != piece) {
-						continue; // we already know what is going on for the lastMove and only care about same values
-					} else {
-						int direction = (i - lastMovePosition.X != 0) ? j - lastMovePosition.Y / i - lastMovePosition.X : Integer.MAX_VALUE;
-
-						// use to count if there are at least 4 pieces in one row
-						int countPieces = 0;
-
-						// we want to try every value 3 position before the lastMovePosition and 3 position after
-						// so as not to miss any case (configuration:  oooxooo)
-						int minX = Math.max(0, lastMovePosition.X - 3),
-							maxX = Math.min(lastMovePosition.X + 3, BOARD_WIDTH),
-							minY = Math.max(0, lastMovePosition.Y - 3),
-							maxY = Math.min(lastMovePosition.X + 3, BOARD_HEIGHT);
-						// besides we have to handle the diagonals
-						int minXY = Math.max(minX - lastMovePosition.X, minY - lastMovePosition.Y),
-							maxXY = Math.min(maxX - lastMovePosition.X, maxY - lastMovePosition.Y);
-
-						switch (direction) { // we check if there is 4 pieces in the same direction
-						case -1:
-							for (int elt = minXY; elt < maxXY; elt++) {
-								if (board[lastMovePosition.Y - elt][lastMovePosition.X + elt] == piece) {
-									countPieces++;
-									// if we already have our 4 pieces, we can break
-									if (countPieces == 4) {
-										lastMoveWin = true;
-										break here;
-									}
-								} else {
-									countPieces = 0;
-								}
-							}
-							break;
-						case 0:
-							for (int elt = minX; elt < maxX; elt++) {
-								if (board[lastMovePosition.Y][elt] == piece) {
-									countPieces++;
-									// if we already have our 4 pieces, we can break
-									if (countPieces == 4) {
-										lastMoveWin = true;
-										break here;
-									}
-								} else {
-									countPieces = 0;
-								}
-							}
-							break;
-						case 1:
-							for (int elt = minXY; elt < maxXY; elt++) {
-								if (board[lastMovePosition.Y + elt][lastMovePosition.X + elt] == piece) {
-									countPieces++;
-									// if we already have our 4 pieces, we can break
-									if (countPieces == 4) {
-										lastMoveWin = true;
-										break here;
-									}
-								} else {
-									countPieces = 0;
-								}
-							}
-							break;
-						default: // when we have MAX_VALUE
-							for (int elt = minY; elt < maxY; elt++) {
-								if (board[elt][lastMovePosition.X] == piece) {
-									countPieces++;
-									// if we already have our 4 pieces, we can break
-									if (countPieces == 4) {
-										lastMoveWin = true;
-										break here;
-									}
-								} else {
-									countPieces = 0;
-								}
-							}
+		if (board[y0][x0] == piece || board[y1][x1] == piece) {
+			int x_min = Math.max(0, lastMovePosition.X - 3),
+				y_min = Math.max(0, lastMovePosition.Y - 3);
+					
+			int countPieces = 0;
+			for (int i = 0; i < 7; i++) {
+				if (y_min + i >= 0 && y_min + i < BOARD_HEIGHT &&
+					x_min + i >= 0 && x_min + i < BOARD_WIDTH) {
+					if (board[y_min + i][x_min + i] == piece) {
+						countPieces++;
+						// if we already have our 4 pieces, we can break
+						if (countPieces == 4) {
+							lastMoveWin = true;
 							break;
 						}
+					} else {
+						countPieces = 0;
 					}
 				}
 			}
-
+		} else if (board[y1][x0] == piece || board[y0][x1] == piece) {
+			int x_min = Math.max(0, lastMovePosition.X - 3),
+				y_max = Math.min(lastMovePosition.Y + 3, BOARD_HEIGHT - 1);
+			
+			int countPieces = 0;
+			for (int i = 0; i < 7; i++) {
+				if (y_max - i >= 0 && y_max - i < BOARD_HEIGHT &&
+					x_min + i >= 0 && x_min + i < BOARD_WIDTH) {
+					if (board[y_max - i][x_min + i] == piece) {
+						countPieces++;
+						// if we already have our 4 pieces, we can break
+						if (countPieces == 4) {
+							lastMoveWin = true;
+							break;
+						}
+					} else {
+						countPieces = 0;
+					}
+				}
+			}
+			
+		} else if (board[lastMovePosition.Y][x0] == piece || board[lastMovePosition.Y][x1] == piece) { // horizontal lines
+			int x_min = Math.max(0, lastMovePosition.X - 3),
+				x_max = Math.min(lastMovePosition.X + 3, BOARD_WIDTH - 1);
+			
+			int countPieces = 0;
+			
+			for (int i = x_min; i <= x_max; i++) {
+				if (board[lastMovePosition.Y][i] == piece) {
+					countPieces++;
+					// if we already have our 4 pieces, we can break
+					if (countPieces == 4) {
+						lastMoveWin = true;
+						break;
+					}
+				} else {
+					countPieces = 0;
+				}
+			}
+		} else if (board[y1][lastMovePosition.X] == piece) { // test vertical lines
+			int y_min = lastMovePosition.Y,
+				y_max = Math.min(lastMovePosition.Y + 3, BOARD_HEIGHT - 1);
+			
+			int countPieces = 0;
+			
+			for (int i = y_min; i <= y_max; i++) {
+				if (board[i][lastMovePosition.X] == piece) {
+					countPieces++;
+					// if we already have our 4 pieces, we can break
+					if (countPieces == 4) {
+						lastMoveWin = true;
+						break;
+					}
+				} else {
+					countPieces = 0;
+				}
+			}
+		}
+		
 		return lastMoveWin;
 	}
 
