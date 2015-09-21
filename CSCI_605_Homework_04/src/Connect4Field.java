@@ -70,7 +70,99 @@ public class Connect4Field implements Connect4FieldInterface {
 	@Override
 	public boolean didLastMoveWin() 
 	{
-		return 0 == lastMovePosition.X;
+			boolean lastMoveWin = false;
+		
+		char piece = board[lastMovePosition.X][lastMovePosition.Y];
+		
+		int y0 = Math.max(0, lastMovePosition.Y - 1),
+			y1 = Math.min(lastMovePosition.Y + 1, BOARD_HEIGHT - 1),
+			x0 = Math.max(0, lastMovePosition.X - 1),
+			x1 = Math.min(lastMovePosition.X + 1, BOARD_WIDTH - 1);
+		
+		here:
+		
+		for (int j = y0; j <= y1; j++) {
+			for (int i = x0; i <= x1; i++) {
+				if (i == lastMovePosition.X && j == lastMovePosition.Y || board[i][j] != piece) {
+					break; // we already know what is going on for the lastMove and only care about same values
+				} else {
+					int direction = (i - lastMovePosition.X != 0) ? j - lastMovePosition.Y / i - lastMovePosition.X : Integer.MAX_VALUE;
+					
+					// use to count if there are at least 4 pieces in a row
+					int countPieces = 0;
+					
+					// we want to try every value 3 position before the lastMovePosition and 3 position after
+					// so as not to miss any case (configuration:  oooxooo)
+					int minX = Math.max(0, lastMovePosition.X - 3),
+						maxX = Math.min(lastMovePosition.X + 3, BOARD_WIDTH -1),
+						minY = Math.max(0, lastMovePosition.Y - 3),
+						maxY = Math.min(lastMovePosition.X - 3, BOARD_HEIGHT -1);
+					// besides we have to handle the diagonals
+					int minXY = Math.max(minX - lastMovePosition.X, minY - lastMovePosition.Y),
+						maxXY = Math.min(maxX - lastMovePosition.X, maxY - lastMovePosition.Y);
+					
+					switch (direction) { // we check if there is 4 pieces in the same direction
+					case -1:
+						for (int elt = minXY; elt < maxXY; elt++) {
+							 if (board[lastMovePosition.X + elt][lastMovePosition.Y - elt] == piece) {
+								 countPieces++;
+								 // if we already have our 4 pieces, we can break
+								 if (countPieces == 4) {
+									 lastMoveWin = true;
+									 break here;
+								 }
+							 } else {
+								 countPieces = 0;
+							 }
+						}
+						break;
+					case 0:
+						for (int elt = minX; elt < maxX; elt++) {
+							 if (board[elt][lastMovePosition.Y] == piece) {
+								 countPieces++;
+								 // if we already have our 4 pieces, we can break
+								 if (countPieces == 4) {
+									 lastMoveWin = true;
+									 break here;
+								 }
+							 } else {
+								 countPieces = 0;
+							 }
+						}
+						break;
+					case 1:
+						for (int elt = minXY; elt < maxXY; elt++) {
+							 if (board[lastMovePosition.X + elt][lastMovePosition.Y + elt] == piece) {
+								 countPieces++;
+								 // if we already have our 4 pieces, we can break
+								 if (countPieces == 4) {
+									 lastMoveWin = true;
+									 break here;
+								 }
+							 } else {
+								 countPieces = 0;
+							 }
+						}
+						break;
+					default: // when we have MAX_VALUE
+						for (int elt = minY; elt < maxY; elt++) {
+							 if (board[lastMovePosition.X][elt] == piece) {
+								 countPieces++;
+								 // if we already have our 4 pieces, we can break
+								 if (countPieces == 4) {
+									 break;
+								 }
+							 } else {
+								 countPieces = 0;
+							 }
+						}
+						break;
+					}
+				}
+			}
+		}
+		
+		return lastMoveWin;
 	}
 
 	@Override
