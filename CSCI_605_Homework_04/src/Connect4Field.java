@@ -33,7 +33,7 @@ public class Connect4Field implements Connect4FieldInterface {
 			thin++;
 		}
 		
-		thePlayers = new Player[2];
+		thePlayers = new PlayerInterface[2];
 
 		lastMovePosition = new Position();
 	}
@@ -69,6 +69,8 @@ public class Connect4Field implements Connect4FieldInterface {
 			System.out.println("dropPieces wrong input : column : (" + column + ") is out of range or full");
 		}
 	}
+	
+
 
 	@Override
 	public boolean didLastMoveWin() {
@@ -212,7 +214,8 @@ public class Connect4Field implements Connect4FieldInterface {
 		boolean gameIsOver = false;
 
 		do {
-			for ( int index = 0; index < 2; index ++ )      {
+			for ( int index = 0; index < 2; index ++ )     
+			{
 				System.out.println(this);
 				if ( isItaDraw() )      {
 					System.out.println("Draw");
