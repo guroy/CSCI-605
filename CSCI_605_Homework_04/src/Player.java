@@ -35,11 +35,21 @@ public class Player implements PlayerInterface
 
 	int askLetter()
 	{
-		System.out.println("Enter the column where to place the piece : ");
-		Scanner reader = new Scanner(System.in);
-		int c = reader.next().charAt(0);
-		reader.close();
-		return c;
+		int res = 0;
+		try
+		{
+			System.out.println("Enter the column where to place the piece : ");
+			Scanner reader = new Scanner(System.in);
+			res = reader.nextInt();
+			System.in.reset();
+			reader.close();
+		}
+		catch(Exception ex)
+		{
+			ex.getStackTrace();
+		
+		}
+		return res;
 	}
 
 }
