@@ -13,5 +13,14 @@ Practical Homeworks developed on Java using Eclipse IDE.
 
 Homeworks
 ----
-##### <a href="https://github.com/guroy/CSCI-510/tree/master/CSCI-510/Lab%201%20-%20Line%20Drawing">Lab 1: Line Drawing</a>
-* Implementation of the Midpoint Line Drawing algorithm. Providing source code of a setPixel() whose prototype is:
+##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_01/src/exercise">Homework 1</a>
+* Using some environment variabes. Calculator implementation. Best number algorithm.
+
+##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_02/src/exercise">Homework 2</a>
+* Adding new features to Calculator. Code explanation. Factorization. Subsets.
+
+##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_03/src/exercise">Homework 3</a>
+* Code explanation. Inheritance exercises. Hang Man game.
+
+##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_04/src/exercise">Homework 4</a>
+* Connect Four game.
