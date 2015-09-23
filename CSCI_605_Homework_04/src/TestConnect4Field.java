@@ -1,3 +1,13 @@
+/**
+ * Implement a Connect 4 game
+ *
+ *
+ * @version   $Id: TestConnect4Field.java,v 1.0 2015/09/20 $
+ * @author    Gurvan Lecuyer
+ * @author    Guillaume Roy
+ *
+ */
+
 
 public class TestConnect4Field 
 {

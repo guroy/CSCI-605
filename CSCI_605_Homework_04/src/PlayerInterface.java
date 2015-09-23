@@ -1,3 +1,13 @@
+/**
+ * Implement a Connect 4 game
+ *
+ *
+ * @version   $Id: PlayerInterface.java,v 1.0 2015/09/20 $
+ * @author    Gurvan Lecuyer
+ * @author    Guillaume Roy
+ *
+ */
+
 public interface PlayerInterface 
 {
 // this is how your constructor has to be

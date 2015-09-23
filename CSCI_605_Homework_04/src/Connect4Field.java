@@ -1,3 +1,12 @@
+/**
+ * Implement a Connect 4 game
+ *
+ *
+ * @version   $Id: Connect4Field.java,v 1.0 2015/09/20 $
+ * @author    Gurvan Lecuyer
+ * @author    Guillaume Roy
+ *
+ */
 
 public class Connect4Field implements Connect4FieldInterface {
 	static final int BOARD_WIDTH = 25;

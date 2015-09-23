@@ -1,5 +1,16 @@
 import java.util.Scanner;
 
+/**
+ * Implement a Connect 4 game
+ *
+ *
+ * @version   $Id: Player.java,v 1.0 2015/09/20 $
+ * @author    Gurvan Lecuyer
+ * @author    Guillaume Roy
+ *
+ */
+
+
 public class Player implements PlayerInterface 
 {
 	char GamePiece;
