@@ -1,4 +1,16 @@
 package exercise.n1;
+
+/**
+ * Homework 5.1
+ *
+ *
+ * @version   $Id: StringStackOld.java,v 1.0 2015/09/23 $
+ * @author    Gurvan Lecuyer
+ * @author    Guillaume Roy
+ *
+ */
+
+
 // this implementation implements the methods,
 // but the methods are null methods;
 public class StringStackOld implements StackInterfaceOld {
