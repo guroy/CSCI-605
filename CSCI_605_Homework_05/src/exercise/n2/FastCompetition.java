@@ -11,42 +11,42 @@ package exercise.n2;
  */
 
 
-public class FastCompetition implements Competition<E> {
-
-	@Override
-	public boolean add(E e) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public E elementAt(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Competition<E> sort() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-}
+//public class FastCompetition implements Competition<E> {
+//
+//	@Override
+//	public boolean add(E e) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+//
+//	@Override
+//	public boolean contains(Object o) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+//
+//	@Override
+//	public boolean remove(Object o) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
+//
+//	@Override
+//	public E elementAt(int index) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public Competition<E> sort() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public int size() {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
+//
+//}

@@ -23,7 +23,7 @@ public class StringStackOld implements StackInterfaceOld {
     public static void main(String args[])	{
 	StackInterfaceOld aStackInterfaceOld = new StringStackOld();
 	aStackInterfaceOld.push("hello");	// why is here no warning?
-	String aString = aStackInterfaceOld.pop();
+//	String aString = aStackInterfaceOld.pop();
     }
 /*
 javac StringStackOld.java			// explain this error

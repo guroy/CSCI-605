@@ -1,4 +1,16 @@
 package exercise.n2;
+
+/**
+ * Homework 5.1
+ *
+ *
+ * @version   $Id: Competition.java,v 1.0 2015/09/23 $
+ * @author    Gurvan Lecuyer
+ * @author    Guillaume Roy
+ *
+ */
+
+
 public interface Competition<E>	{
 	// Appends the specified element to this storage.
 	boolean	add(E e);

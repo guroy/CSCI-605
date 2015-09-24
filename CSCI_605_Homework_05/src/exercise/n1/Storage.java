@@ -1,4 +1,16 @@
 package exercise.n1;
+
+/**
+ * Homework 5.1
+ *
+ *
+ * @version   $Id: Storage.java,v 1.0 2015/09/23 $
+ * @author    Gurvan Lecuyer
+ * @author    Guillaume Roy
+ *
+ */
+
+
 public interface Storage<E, V> {
 	// Appends the specified element to the end of this storage.
 	// retursn true, if the element could be added, else false 
