@@ -13,12 +13,12 @@ package exercise.n1;
 
 public interface Storage<E, V> {
 	// Appends the specified element to the end of this storage.
-	// retursn true, if the element could be added, else false 
+	// returns true, if the element could be added, else false 
 	boolean	add(E e);
 
 	// Inserts the specified element at the specified position in this Storage.
-	// retursn true, if the element could be added at position index, else false 
-	public void add(int index, E element);
+	// returns true, if the element could be added at position index, else false 
+	public boolean add(int index, E element);
 
 	// Adds the specified component to the end of this vector, increasing its size by one.
 	public void	addElement(E obj);

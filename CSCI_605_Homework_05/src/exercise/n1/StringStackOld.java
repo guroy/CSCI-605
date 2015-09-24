@@ -23,7 +23,15 @@ public class StringStackOld implements StackInterfaceOld {
     public static void main(String args[])	{
 	StackInterfaceOld aStackInterfaceOld = new StringStackOld();
 	aStackInterfaceOld.push("hello");	// why is here no warning?
-//	String aString = aStackInterfaceOld.pop();
+	/*
+	 * The line above respect the implementation of push() method, with correct attribute types
+	 */
+	@SuppressWarnings("unused")
+	String aString = (String) aStackInterfaceOld.pop();
+	/*
+	 * We can't store a standard undefined Object in a defined Object (such as a String).
+	 * If we cast with a (String), the code can be compiled and aString's value will be null
+	 */
     }
 /*
 javac StringStackOld.java			// explain this error
