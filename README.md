@@ -8,7 +8,7 @@ Practical Homeworks developed on Java using Eclipse IDE.
 * **Instructor:** Abdelniser Mooman 
 * **Year:** 2015
 * **Contributors:**
-  * Gurvan Lecuyer, Computer Engineering and Electronics student - INSA Rennes
+  * <a href="https://github.com/Glecuyer">Gurvan Lecuyer</a>, Computer Engineering and Electronics student - INSA Rennes
   * <a href="https://github.com/guroy">Guillaume Roy</a>, Computer Science and Software Engineering student - INSA Rennes
 
 Homeworks
