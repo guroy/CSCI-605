@@ -7,14 +7,14 @@ package exercise.n1;
  * Homework 5.1
  *
  *
- * @version   $Id: StorageFixed.java,v 1.0 2015/09/23 $
+ * @version   $Id: StorageDynamic.java,v 1.0 2015/09/23 $
  * @author    Gurvan Lecuyer
  * @author    Guillaume Roy
  *
  */
 
-public class StorageFixed<E, V> implements Storage<E, V> {
-	
+public class StorageDynamic<E, V> implements Storage<E, V> {
+
 	Object[] storage = null;
 	int capacity;
 	int currentIndex;
@@ -23,7 +23,7 @@ public class StorageFixed<E, V> implements Storage<E, V> {
 	/**
 	 * 
 	 */
-	public StorageFixed() {
+	public StorageDynamic() {
 		currentIndex = 0;
 		capacity = Math.min(CAPACITY, MAX_CAPACITY);
 		storage = new Object[this.capacity];
@@ -81,5 +81,6 @@ public class StorageFixed<E, V> implements Storage<E, V> {
 	public E lastElement() {
 		return (E)storage[currentIndex - 1];
 	}
+
 
 }

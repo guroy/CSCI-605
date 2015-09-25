@@ -33,7 +33,7 @@ public interface Storage<E, V> {
 	public void	clear();
 
 	// Returns a clone of this vector.
-	public Object	clone();
+	// public Object	clone();
 
 	// Returns the first component (the item at index 0) of this vector.
 	public E	firstElement();
