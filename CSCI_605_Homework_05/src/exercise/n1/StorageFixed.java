@@ -15,50 +15,47 @@ package exercise.n1;
 
 public class StorageFixed<E, V> implements Storage<E, V> {
 	
-	Object[] storage = null;
-	int capacity;
+	Object[] storage;
 	int currentIndex;
-	static final int MAX_CAPACITY = 100, CAPACITY = 10;
+	int capacity;
+	static final int MAX_CAPACITY = 100;
 	
 	/**
 	 * 
 	 */
 	public StorageFixed() {
 		currentIndex = 0;
-		capacity = Math.min(CAPACITY, MAX_CAPACITY);
-		storage = new Object[this.capacity];
+		capacity = MAX_CAPACITY;
+		storage = new Object[capacity];
 	}
 
 	public boolean add(E e) {
-		if (currentIndex < capacity) {
-			storage[capacity++] = e;
+		if (currentIndex < capacity - 1) {
+			storage[currentIndex++] = e;
 			return true;
 		}
 		return false;
 	}
 
 	public boolean add(int index, E element) {
-		if (currentIndex < capacity) {
-			E e = (E) storage[index];
+		if (currentIndex < capacity - 1) {
+			Object e = storage[index];
 			storage[index] = element;
-			storage[capacity++] = e;
+			storage[currentIndex++] = e;
 			return true;
 		}
 		return false;
 	}
 
 	public void addElement(E obj) {
-		add(obj);
-		
+		add(obj);	
 	}
 
 	public void addElement(E obj, V elem) {
 		add(obj);
 		if (currentIndex < capacity) {
-			storage[capacity++] = elem;
+			storage[currentIndex++] = elem;
 		}
-		
-		
 	}
 
 	public int capacity() {
@@ -66,8 +63,7 @@ public class StorageFixed<E, V> implements Storage<E, V> {
 	}
 
 	public void clear() {
-		storage = new Object[capacity];
-		
+		storage = new Object[capacity];	
 	}
 
 	public E firstElement() {
@@ -81,5 +77,4 @@ public class StorageFixed<E, V> implements Storage<E, V> {
 	public E lastElement() {
 		return (E)storage[currentIndex - 1];
 	}
-
 }
