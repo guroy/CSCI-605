@@ -24,3 +24,6 @@ Homeworks
 
 ##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_04/src/exercise">Homework 4</a>
 * Connect Four game.
+
+##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_05/src/exercise">Homework 5</a>
+* Generics. Storage. Class competition.
