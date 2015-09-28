@@ -81,9 +81,9 @@ public class FastCompetition<E> implements Competition<E> {
 	@Override
 	public E elementAt(int index)
 {
-		if (0 < index && this.index > 0 && index < this.index ) 
+		if (0 <= index && this.index >= 0 && index < this.index ) 
 		{
-			return (E)values[index-1];
+			return (E)values[index];
 		}
 		return null;
 	}
@@ -91,7 +91,17 @@ public class FastCompetition<E> implements Competition<E> {
 	@Override
 	public Competition<E> sort()
 	{
-		return null;
+		E tmp;
+		for (int i = 0; i < index; i++) {
+			for (int j = i; j < index; j++) {
+				if (((String)values[j]).compareTo((String)values[i]) < 0) {
+					tmp = (E)values[j];
+					values[j] = values[i];
+					values[i] = tmp;
+				}
+			}
+		}
+		return this;
 	}
 
 	@Override

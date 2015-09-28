@@ -44,11 +44,13 @@ public class TestFastCompetition	{
 	private void sortTest()	{
 		aStringStorage.sort();
 		
-		for ( int index = 0; index < 10000 - 1; index ++ )	{
+		for ( int index = 0; index < 1000 -1; index ++ )	{
 			String thisOne = aStringStorage.elementAt(index);
 			String nextOne = aStringStorage.elementAt(index+1);
 			if ( thisOne.compareTo(nextOne) > 0 )
+			{
 				failure("sortTest");
+			}
 		}
 	}
 	private void removeTest()	{
@@ -56,7 +58,6 @@ public class TestFastCompetition	{
 		{
 			if ( ! (aStringStorage.remove("hello" + index)  ) )
 			{
-				System.out.println("first remove "+ index);
 				failure("remove " + index);
 			}
 			if ( aStringStorage.size() != 10000 - index - 1)
@@ -68,7 +69,6 @@ public class TestFastCompetition	{
 		}
 		if ( ! (aStringStorage.remove("hello" + 1)  ) )
 		{
-			System.out.println("second remove "+ 1);
 			print("remove - expected");
 		}
 	}
@@ -79,12 +79,11 @@ public class TestFastCompetition	{
 
 		addTest();
 		containTest();
-		// sortTest();
+		sortTest();
 		removeTest();
 
 		long endTime = System.currentTimeMillis();
-		System.out.println(endTime-startTime);
-		
+		System.out.println("Process time: " + (endTime-startTime) + "ms");	
 	}
 	
 	public static void main(String args[] )     {
