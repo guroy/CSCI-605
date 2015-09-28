@@ -14,35 +14,25 @@ package exercise.n2;
 
 public class FastCompetition<E> implements Competition<E> {
 	Object[] values;
-	int[] occurences;
 	int index;
-	int maximumIndex;
-	int nbElementsStored;
 	
-	
-	public FastCompetition() {
-		values = new Object[100000];
-		occurences = new int[100000];
+	public FastCompetition() 
+	{
+		values = new Object[1000000];
 		index = 0;
-		maximumIndex = 0;
-		nbElementsStored = 0;
+	}
+	public FastCompetition(int size) 
+	{
+		values = new Object[size];
+		index = 0;
 	}
 
 	@Override
 	public boolean add(E e) {
-		if (nbElementsStored < 999999) {
-			if (!contains(e)) {
-				if (maximumIndex < 99999) {
-					values[index] = e;
-					occurences[index++] = 1;
-					nbElementsStored++;
-				} else {
-					return false;
-				}
-			} else {
-				occurences[index]++;
-				nbElementsStored++;
-			}
+		if (index < 999999) 
+		{
+			values[index] = e;
+			index++;
 			return true;
 		}
 		return false;
@@ -51,10 +41,11 @@ public class FastCompetition<E> implements Competition<E> {
 	@Override
 	public boolean contains(Object o) {
 		boolean result = false;
-		for(int i = 0; i < maximumIndex; i++) {
-			if (o.equals(values[i])) {
-				index = i;
-				result = occurences[i] > 0;
+		for(int i = 0; i < index; i++) 
+		{
+			if (o.equals(values[i])) 
+			{
+				result = true;
 				break;
 			}
 		}
@@ -62,32 +53,51 @@ public class FastCompetition<E> implements Competition<E> {
 	}
 
 	@Override
-	public boolean remove(Object o) {
-		if (contains(o)) {
-			occurences[index]--;
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public E elementAt(int index) {
-		if (0 < index) {
-			if (index < 100000) {
-				return (E)values[index];
+	public boolean remove(Object o)
+	{
+		boolean res = false;
+		boolean loop = true;
+		int count = 0;
+		while(loop && count < index)
+		{
+			if(!o.equals(values[count]))
+			{
+				count++;
+			}
+			else
+			{
+				loop = false;
+				for(; count < this.index-1; count++)
+				{
+					values[count] = values[count+1];
+				}
+				index--;
+				res = true;
 			}
 		}
+		return res;
+	}
+
+	@Override
+	public E elementAt(int index)
+{
+		if (0 < index && this.index > 0 && index < this.index ) 
+		{
+			return (E)values[index-1];
+		}
 		return null;
 	}
 
 	@Override
-	public Competition<E> sort() {
+	public Competition<E> sort()
+	{
 		return null;
 	}
 
 	@Override
-	public int size() {
-		return nbElementsStored;
+	public int size() 
+	{
+		return index;
 	}
 
 }
