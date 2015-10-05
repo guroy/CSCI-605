@@ -10,13 +10,14 @@ package exercise.n2;
  *
  */
 
-public class Connect4Field implements Connect4FieldInterface {
+public class Connect4FieldModel implements Connect4FieldInterface {
 	static final int BOARD_WIDTH = 25;
 	static final int BOARD_HEIGHT = 9;
 
 	char[][] board;
 	PlayerInterface thePlayers[];
 	Position lastMovePosition;
+	int indexWinner;
 
 	// store the position of a piece in the board
 	class Position { 
@@ -24,7 +25,7 @@ public class Connect4Field implements Connect4FieldInterface {
 		int Y;
 	}
 
-	public Connect4Field() {
+	public Connect4FieldModel() {
 		super();
 
 		board = new char[BOARD_HEIGHT][BOARD_WIDTH];
@@ -45,6 +46,7 @@ public class Connect4Field implements Connect4FieldInterface {
 		}
 		
 		thePlayers = new PlayerInterface[2];
+		indexWinner = -1;
 
 		lastMovePosition = new Position();
 	}
@@ -54,34 +56,6 @@ public class Connect4Field implements Connect4FieldInterface {
 	{
 		return (column >= 0 && column < BOARD_WIDTH) ? board[0][column] == 'o' : false;
 	}
-
-	@Override
-	public void dropPieces(int column, char gamePiece) 
-	{
-		int i = 0;
-		char buf;
-		if(checkIfPiecedCanBeDroppedIn(column))
-		{					
-			do
-			{
-				buf = board[i][column];
-				if (buf != 'o') {
-					break;
-				}
-				i++;
-			} while (i < BOARD_HEIGHT);
-
-			board[i-1][column] = gamePiece;
-			lastMovePosition.X = column;
-			lastMovePosition.Y = i-1;
-		}
-		else
-		{
-			System.out.println("dropPieces wrong input : column : (" + column + ") is out of range or full");
-		}
-	}
-	
-
 
 	@Override
 	public boolean didLastMoveWin() {
@@ -210,36 +184,6 @@ public class Connect4Field implements Connect4FieldInterface {
 			displayBoard += '\n';
 		}
 		return displayBoard;
-	}
-
-	@Override
-	public void playTheGame()
-	{
-		int column;
-//		System.out.println(this);
-		boolean gameIsOver = false;
-
-		do {
-			for ( int index = 0; index < 2; index ++ )     
-			{
-				System.out.println(this);
-				if ( isItaDraw() )      {
-					System.out.println("Draw");
-					gameIsOver = true;
-
-				} else {
-					column = thePlayers[index].nextMove();
-					dropPieces(column, thePlayers[index].getGamePiece() );
-					
-					if ( didLastMoveWin() ) {
-						gameIsOver = true;
-						System.out.println("The winner is: " + thePlayers[index].getName());
-					}
-				}
-			}
-
-		}  while ( ! gameIsOver  );
-
 	}
 
 }

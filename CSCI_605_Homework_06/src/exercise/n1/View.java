@@ -1,6 +1,8 @@
 package exercise.n1;
 
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Vector;
 
 /**
 * Re-design and re-implement HW 2.1 using the the MVC paradigm
@@ -26,10 +28,19 @@ public class View {
 	public void askUserInput() {
 		System.out.println("Please, enter calculus:");
 		Scanner reader = new Scanner(System.in);
-		String myInput = "";
-		myInput = reader.nextLine();
-		
-		System.out.println(myInput);
+		String myInput = reader.nextLine();
+		control.calculator.myArguments.clear();
+		for(int i=0; i < myInput.length(); i++)
+		{
+			//System.out.println("element of input at " + i + " " +myInput.charAt(i));
+			String buf = "";
+			if(myInput.charAt(i) != ' ')
+			{
+				buf += myInput.charAt(i);
+				control.calculator.myArguments.add(buf);
+			}
+		}
+		System.out.println(control.calculator.myArguments);
 		control.updatedModel = true;
 		reader.close();
 	}

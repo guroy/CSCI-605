@@ -63,28 +63,36 @@ public class CalculatorModel {
 			indexEnd,
 			i = 0;
 		
-		while ( i < size ) {
+		while ( i < size ) 
+		{
 			// if there are no parenthesis, compute simple expression
-			if ( !this.myArguments.contains( "(" ) && !this.myArguments.contains( ")" ) ) {
+			if ( !this.myArguments.contains( "(" ) && !this.myArguments.contains( ")" ) ) 
+			{
 				result = Integer.parseInt( computeSingleParenthesisExpression( this.myArguments ) );
 				break;
 			}
 			
 			// If a parenthesis is opened, store its index
-			if ( this.myArguments.get( i ).equals( "(" ) ) {
+			if ( this.myArguments.get( i ).equals( "(" ) ) 
+			{
 				indexBeginning = i++;
-			} else if ( this.myArguments.get( i ).equals( ")" ) ) {
+				result = Integer.parseInt( this.myArguments.get( 0 ) );
+			}
+			else if ( this.myArguments.get( i ).equals( ")" ) ) 
+			{
 				indexEnd = i;
 				// locate and compute single parenthesis in the expression
 				this.myArguments.set( indexBeginning, computeSingleParenthesisExpression( copyFromTo( indexBeginning, indexEnd ) ) );
 				this.removeFromTo( indexBeginning, indexEnd );
 				i = 0; // try again with parenthesis w/ lower depth
-			} else {
+				result = Integer.parseInt( this.myArguments.get( 0 ) );
+			} 
+			else 
+			{
 				i++;
 			}
 		}
 		
-		result = Integer.parseInt( this.myArguments.get( 0 ) );
 	}
 	
 	

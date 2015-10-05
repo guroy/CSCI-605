@@ -13,9 +13,9 @@ package exercise.n2;
 public class PlayerAI implements PlayerInterface {
 	char GamePiece;
 	String Name;
-	Connect4Field field;
+	Connect4FieldModel field;
 	
-	PlayerAI(Connect4Field theField, char gamePiece)
+	PlayerAI(Connect4FieldModel theField, char gamePiece)
 	{
 		field = theField;
 		Name = "AI";
@@ -45,7 +45,7 @@ public class PlayerAI implements PlayerInterface {
 				break;
 			}
 			res++;
-		} while (res < Connect4Field.BOARD_HEIGHT);
+		} while (res < Connect4FieldModel.BOARD_HEIGHT);
 		return res-1;
 	}
 
@@ -54,7 +54,7 @@ public class PlayerAI implements PlayerInterface {
 	{
 		int position;
 		int res = -1;
-		for(int i = 0; i < Connect4Field.BOARD_WIDTH; i++)
+		for(int i = 0; i < Connect4FieldModel.BOARD_WIDTH; i++)
 		{
 			if(field.checkIfPiecedCanBeDroppedIn(i))
 			{
@@ -65,20 +65,20 @@ public class PlayerAI implements PlayerInterface {
 					//test if the position is next to the top of the board
 					if(i == 0)
 					{
-						if(((Connect4Field)field).board[position][i+1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i+1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i] == GamePiece)
+						if(((Connect4FieldModel)field).board[position][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i] == GamePiece)
 						{
 							res = i;
 							break;
 						}
 					}
 					//test if the position is next to the bottom of the board
-					else if(i == Connect4Field.BOARD_WIDTH-1)
+					else if(i == Connect4FieldModel.BOARD_WIDTH-1)
 					{
-						if(((Connect4Field)field).board[position+1][i] == GamePiece ||
-								((Connect4Field)field).board[position][i-1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i-1] == GamePiece)
+						if(((Connect4FieldModel)field).board[position+1][i] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i-1] == GamePiece)
 						{
 							res = i;
 							break;
@@ -87,11 +87,11 @@ public class PlayerAI implements PlayerInterface {
 					else
 					{
 						//other case
-						if(((Connect4Field)field).board[position][i+1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i+1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i] == GamePiece ||
-								((Connect4Field)field).board[position][i-1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i-1] == GamePiece)
+						if(((Connect4FieldModel)field).board[position][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i-1] == GamePiece)
 						{
 							res = i;
 							break;
@@ -99,23 +99,23 @@ public class PlayerAI implements PlayerInterface {
 					}
 				}
 				//test if the position is next to the right of the board
-				else if(position == Connect4Field.BOARD_HEIGHT-1)
+				else if(position == Connect4FieldModel.BOARD_HEIGHT-1)
 				{
 					//test if the position is next to the top of the board
 					if(i == 0)
 					{
-						if(((Connect4Field)field).board[position-1][i-1] == GamePiece ||
-								((Connect4Field)field).board[position][i-1] == GamePiece)
+						if(((Connect4FieldModel)field).board[position-1][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i-1] == GamePiece)
 						{
 							res = i;
 							break;
 						}
 					}
 					//test if the position is next to the bottom of the board
-					else if(i == Connect4Field.BOARD_WIDTH-1)
+					else if(i == Connect4FieldModel.BOARD_WIDTH-1)
 					{
-						if(((Connect4Field)field).board[position-1][i-1] == GamePiece ||
-								((Connect4Field)field).board[position][i-1] == GamePiece)
+						if(((Connect4FieldModel)field).board[position-1][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i-1] == GamePiece)
 						{
 							res = i;
 							break;
@@ -124,10 +124,10 @@ public class PlayerAI implements PlayerInterface {
 					else
 					{
 						//other position
-						if(((Connect4Field)field).board[position-1][i+1] == GamePiece ||
-								((Connect4Field)field).board[position][i+1] == GamePiece ||
-								((Connect4Field)field).board[position-1][i-1] == GamePiece ||
-								((Connect4Field)field).board[position][i-1] == GamePiece)
+						if(((Connect4FieldModel)field).board[position-1][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position-1][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i-1] == GamePiece)
 						{
 							res = i;
 							break;
@@ -140,21 +140,21 @@ public class PlayerAI implements PlayerInterface {
 				{
 					if(i == 0)
 					{
-						if(((Connect4Field)field).board[position-1][i+1] == GamePiece ||
-								((Connect4Field)field).board[position][i+1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i+1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i] == GamePiece)
+						if(((Connect4FieldModel)field).board[position-1][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i] == GamePiece)
 						{
 							res = i;
 							break;
 						}
 					}
-					else if(i == Connect4Field.BOARD_WIDTH-1)
+					else if(i == Connect4FieldModel.BOARD_WIDTH-1)
 					{
-						if(((Connect4Field)field).board[position+1][i] == GamePiece ||
-								((Connect4Field)field).board[position-1][i-1] == GamePiece ||
-								((Connect4Field)field).board[position][i-1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i-1] == GamePiece)
+						if(((Connect4FieldModel)field).board[position+1][i] == GamePiece ||
+								((Connect4FieldModel)field).board[position-1][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i-1] == GamePiece)
 						{
 							res = i;
 							break;
@@ -162,13 +162,13 @@ public class PlayerAI implements PlayerInterface {
 					}
 					else
 					{
-						if(((Connect4Field)field).board[position-1][i+1] == GamePiece ||
-								((Connect4Field)field).board[position][i+1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i+1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i] == GamePiece ||
-								((Connect4Field)field).board[position-1][i-1] == GamePiece ||
-								((Connect4Field)field).board[position][i-1] == GamePiece ||
-								((Connect4Field)field).board[position+1][i-1] == GamePiece)
+						if(((Connect4FieldModel)field).board[position-1][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i+1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i] == GamePiece ||
+								((Connect4FieldModel)field).board[position-1][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position][i-1] == GamePiece ||
+								((Connect4FieldModel)field).board[position+1][i-1] == GamePiece)
 						{
 							res = i;
 							break;

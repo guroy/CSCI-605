@@ -13,7 +13,8 @@ package exercise.n2;
 
 public class TestConnect4Field 
 {
-	public Connect4Field aConnect4Field = new Connect4Field();
+	public View observer= new View();
+	public Connect4FieldModel aConnect4Field = new Connect4FieldModel();
 	public Player aPlayer = new Player(aConnect4Field, "A", '+');
 	//public Player bPlayer = new Player(aConnect4Field, "B",'*');
 	public PlayerAI bPlayer = new PlayerAI(aConnect4Field, '*');
@@ -26,7 +27,7 @@ public class TestConnect4Field
 	}
 	public void testIt() 
 	{
-		aConnect4Field = new Connect4Field();
+		//aConnect4Field = new Connect4FieldModel();
 		aPlayer = new Player(aConnect4Field, "A", '+');
 		bPlayer = new PlayerAI(aConnect4Field, '*');
 //		aConnect4((Connect4Field)field).board[8][15] = 'x';
@@ -41,9 +42,35 @@ public class TestConnect4Field
 //		aConnect4Field.didLastMoveWin();
 //		System.out.println(aConnect4Field.isItaDraw());
 		aConnect4Field.init(aPlayer, bPlayer);
-		aConnect4Field.playTheGame();
-	}
-	public static void main( String[] args ) 
+
+		int column;
+		boolean gameIsOver = false;
+
+		do {
+			for ( int index = 0; index < 2; index ++ )     
+			{
+				observer.displayBoard();
+				System.out.println(this);
+				if ( aConnect4Field.isItaDraw() )      {
+					aConnect4Field.indexWinner = -1;
+					gameIsOver = true;
+
+				} else {
+					column = aConnect4Field.thePlayers[index].nextMove();
+					observer.dropPieces(column, aConnect4Field.thePlayers[index].getGamePiece() );
+					
+					if ( aConnect4Field.didLastMoveWin() ) {
+						gameIsOver = true;
+						aConnect4Field.indexWinner = index;
+					}
+				}
+			}
+
+		}  while ( ! gameIsOver  );
+}
+	
+	
+	public static void main( String[] args)
 	{
 		new TestConnect4Field().testIt();
 	}
