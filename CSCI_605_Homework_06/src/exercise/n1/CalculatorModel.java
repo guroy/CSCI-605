@@ -17,30 +17,39 @@ import java.util.Vector;
 *
 */
 
-public class Calculator {
+public class CalculatorModel {
 	
 	Vector<String> myArguments;
+	/**
+	 * @param myArguments the myArguments to set
+	 */
+	public void setMyArguments(String myArguments) {
+		this.myArguments = new Vector<String>(Arrays.asList(myArguments));
+	}
+
+
+	int result;
 	
-	public Calculator(Vector<String> myArguments) {
-		super();
-		this.myArguments = myArguments;
+	public CalculatorModel() {
+		myArguments = new Vector<String>(Arrays.asList( "" ) );
+		result = 0;
 	}
 	
 
 	static Vector<String> operators = initOperators( );
 
 	
-	public static void main ( String args [] ) { // main program
-		//get the list of arguments from terminal
-		Vector<String> myArgs = new Vector<String>(Arrays.asList( args ) );
-		//create expression with such list
-		Calculator myExpression = new Calculator( myArgs ) ;
-		myExpression.handleTerminalIssues( );
-		
-		System.out.println( myExpression.myArguments );
-		
-		System.out.println( myExpression.computeExpression( ) );
-	}
+//	public static void main ( String args [] ) { // main program
+//		//get the list of arguments from terminal
+//		Vector<String> myArgs = new Vector<String>(Arrays.asList( args ) );
+//		//create expression with such list
+//		CalculatorModel myExpression = new CalculatorModel( myArgs ) ;
+//		myExpression.handleTerminalIssues( );
+//		
+//		System.out.println( myExpression.myArguments );
+//		
+//		System.out.println( myExpression.computeExpression( ) );
+//	}
 
 	
 	/**
@@ -48,7 +57,7 @@ public class Calculator {
 	 *
 	 * @return	the result
 	 */
-	int computeExpression( ) {
+	void computeExpression( ) {
 		int size = this.myArguments.size(),
 			indexBeginning = 0,
 			indexEnd,
@@ -57,7 +66,8 @@ public class Calculator {
 		while ( i < size ) {
 			// if there are no parenthesis, compute simple expression
 			if ( !this.myArguments.contains( "(" ) && !this.myArguments.contains( ")" ) ) {
-				return Integer.parseInt( computeSingleParenthesisExpression( this.myArguments ) );
+				result = Integer.parseInt( computeSingleParenthesisExpression( this.myArguments ) );
+				break;
 			}
 			
 			// If a parenthesis is opened, store its index
@@ -74,7 +84,7 @@ public class Calculator {
 			}
 		}
 		
-		return Integer.parseInt( this.myArguments.get( 0 ) );
+		result = Integer.parseInt( this.myArguments.get( 0 ) );
 	}
 	
 	
@@ -160,24 +170,7 @@ public class Calculator {
 		 }
 		 
 		 return myCopy;
-	 }
-	 
-	
-	/**
-	 * Convert terminal '\*' , '\(' and '\)' form to understandable '*' , '(' and ')'
-	 *
-	 */
-	void handleTerminalIssues( ) {
-		// when typing "java Calculator arg1 arg2...", the terminal replace "*" with the list
-		// of files in the current directory as it was told to do. That's why we use escape form '\*'.
-		int size = this.myArguments.size();
-		
-		for ( int i = 0; i < size; i += 1 ) {
-			if ( this.myArguments.get( i ).equals("\\*") ) {
-				this.myArguments.set( i, "*" );
-			}
-		}
-	}
+	 } 
 	
 	
 	/**
