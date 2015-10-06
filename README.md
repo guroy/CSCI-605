@@ -30,3 +30,6 @@ Homeworks
 
 ##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_06/src/exercise">Homework 6</a>
 * Using MVC paradigm.
+
+##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_07/src/exercise">Homework 6</a>
+* Redefining GZipOutputStream & GZipInputStream.
