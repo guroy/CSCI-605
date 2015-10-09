@@ -1,11 +1,10 @@
 package exercise.n2;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -23,13 +22,6 @@ import java.io.IOException;
 */
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.Scanner;
-
-import exercise.n1.StringZipOutputStream;
-import sun.misc.IOUtils;
-
 public class StringZipInputStream	
 {
 
@@ -104,28 +96,48 @@ public class StringZipInputStream
 		return res;
     }
     
-    //convert the current stream to a string
-    public String fromStream(InputStream in) throws IOException
+    public String streamToBytesToString(InputStream in) throws IOException
     {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        StringBuilder out = new StringBuilder();
-        String newLine = System.getProperty("line.separator");
-        String line;
-        while ((line = reader.readLine()) != null) {
-            out.append(line);
-            out.append(newLine);
-        }
-        return out.toString();
+    	int length = 46;
+    	byte[] bytes = new byte[length];
+    	int offset = 0;
+    	int numRead = 0;
+    	while (offset < bytes.length && 
+    			(numRead = in.read(bytes, offset, bytes.length - offset)) >= 0) 
+    	{
+    		offset += numRead;
+    	}
+
+    	if (offset < bytes.length) {
+    		throw new IOException("Could not completely read file " );
+    	}
+    	String res = "";
+    	for(byte b : bytes)
+    	{
+    		res += toBinaryString(b);
+    	}
+    	System.out.println(res);
+        return res;
+    }
+    public static String toBinaryString(byte n) 
+    {
+    	StringBuilder sb = new StringBuilder("00000000");
+    	for (int bit = 0; bit < 8; bit++) 
+    	{
+    		if (((n >> bit) & 1) > 0) 
+    		{
+    			sb.setCharAt(7 - bit, '1');
+    		}
+    	}
+    	return sb.toString();
     }
     
     public String read() throws IOException 
     {
     	String res = null;
-    	String encoded = fromStream(input);
-
-    	System.out.println(encoded);
+    	String encoded = streamToBytesToString(input);
     	c = encoded.toCharArray();
-    	if(i > c.length)
+    	if(i < c.length)
     	{
     		//read and construct the tree
     		Node root = readFile();
@@ -149,4 +161,5 @@ public class StringZipInputStream
     	}
     	return res;
     }
+    
 } 

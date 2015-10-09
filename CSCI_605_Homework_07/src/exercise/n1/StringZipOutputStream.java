@@ -197,20 +197,4 @@ public class StringZipOutputStream
 	{
 		output.close();
 	}
-	
-	public static void main(String args[]) throws IOException
-	{
-		String aWord;
-		String inputFileName = "abra.txt";
-		String outputFileName = "abra.compress";
-		BufferedReader input = new BufferedReader(new FileReader(inputFileName));
-		StringZipOutputStream aStringZipOutputStream = new StringZipOutputStream( new FileOutputStream(outputFileName));
-
-		while (  ( aWord = input.readLine() )  != null ) {
-				System.out.println("write:	" + aWord);
-				aStringZipOutputStream.write(aWord);
-		}
-		aStringZipOutputStream.close();
-		input.close();
-	}
 } 
