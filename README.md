@@ -33,3 +33,6 @@ Homeworks
 
 ##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_07/src/exercise">Homework 7</a>
 * Redefining GZipOutputStream & GZipInputStream.
+
+##### <a href="https://github.com/guroy/CSCI-605/tree/master/CSCI_605_Homework_08/src/exercise">Homework 8</a>
+* Threads.
