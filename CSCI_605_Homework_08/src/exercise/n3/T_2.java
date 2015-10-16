@@ -30,5 +30,23 @@ public class T_2 extends Thread    {
             
         System.out.println("theValue = " + theValue );
         System.out.println("theValue = " + theValue );
+        
+        // Possible cases : (with examples)
+ 		/*
+ 		 * theValue = 1
+ 		 * theValue = 2
+ 		 * 
+ 		 * theValue = 1
+ 		 * theValue = 1
+ 		 * 
+ 		 * theValue = 3
+ 		 * theValue = 2
+ 		 * 
+ 		 * theValue = 2
+ 		 * theValue = 2
+ 		 * 
+ 		 * theValue = 1
+ 		 * theValue = 3
+ 		 */
     }       
 }  
