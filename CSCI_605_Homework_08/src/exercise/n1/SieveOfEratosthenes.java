@@ -14,7 +14,7 @@ package exercise.n1;
 public class SieveOfEratosthenes {
 
     final static int FIRSTpRIMEuSED = 2;
-    static int MAX;
+    int MAX;
     final boolean[] numbers;
 
     public SieveOfEratosthenes(int max) {
@@ -30,7 +30,7 @@ public class SieveOfEratosthenes {
 		
 		for (int index = 2; index < limit; index ++ )	{		// this is the part for the parallel part
 			if ( numbers[index] )	{				// this is the part for the parallel part
-				int counter = 2;				// this is the part for the parallel part
+//				int counter = 2;				// this is the part for the parallel part
 //				while ( index * counter < MAX )	{		// this is the part for the parallel part
 //					numbers[index * counter] = false;	// this is the part for the parallel part
 //					counter++;				// this is the part for the parallel part

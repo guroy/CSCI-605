@@ -1,5 +1,17 @@
 package exercise.n1;
 
+/**
+* Implement a parallel version of the sieve of Eratosthenes algorithm.
+*
+*
+* @version   $Id: SieveOfEratosthenesThread.java,v 1.0 2015/10/15 $
+* @author    Gurvan Lecuyer
+* @author    Guillaume Roy
+*
+*
+*/
+
+
 public class SieveOfEratosthenesThread extends Thread {
 	private int index;
 	private int MAX;
