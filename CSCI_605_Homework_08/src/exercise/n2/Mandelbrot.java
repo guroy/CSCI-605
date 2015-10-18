@@ -18,6 +18,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @SuppressWarnings("serial")
 public class Mandelbrot extends JFrame {
@@ -38,24 +41,42 @@ public class Mandelbrot extends JFrame {
 	}
 	public void createSet()	{
 		theImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-		double zx, zy, cX, cY;
-		for (int y = 0; y < getHeight(); y++) {
-			for (int x = 0; x < getWidth(); x++) {
-				zx = zy = 0;
-				cX = (x - LENGTH) / ZOOM;
-				cY = (y - LENGTH) / ZOOM;
-				int iter = 0;
-				double tmp;
-				while ( (zx * zx + zy * zy < 10 ) && ( iter < MAX - 1 ) ) {	// this is the part for the parallel part
-					tmp = zx * zx - zy * zy + cX;				// this is the part for the parallel part
-					zy = 2.0 * zx * zy + cY;					// this is the part for the parallel part
-					zx = tmp;							// this is the part for the parallel part
-					iter++;							// this is the part for the parallel part
-				}								// this is the part for the parallel part
-				if ( iter > 0 )							// this is the part for the parallel part
-					theImage.setRGB(x, y, colors[iter]);			// this is the part for the parallel part
-				else								// this is the part for the parallel part
-					theImage.setRGB(x, y, iter | (iter << 8));		// this is the part for the parallel part
+		int nbProc = Runtime.getRuntime().availableProcessors();
+		//ExecutorService threadPool = Executors.newFixedThreadPool(nbProc);
+		Thread[] multiT = new Thread[nbProc];
+		for (int y = 0; y < getHeight(); y++)
+		{
+			for (int x = 0; x < getWidth()-nbProc; x+=nbProc) 
+			{
+				for(int i = 0; i < nbProc; i++)
+				{
+					multiT[i] = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x+i, y, colors, theImage));
+					multiT[i].start();
+				}
+//				Thread T1 = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x, y, colors, theImage));
+//				Thread T2 = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x+1, y, colors, theImage));
+//				Thread T3 = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x+2, y, colors, theImage));
+//				Thread T4 = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x+3, y, colors, theImage));
+				
+//				T1.start();
+//				T2.start();
+//				T3.start();
+//				T4.start();
+				try
+				{
+					for(int i = 0; i < nbProc; i++)
+					{
+						multiT[i].join();
+					}
+//					T1.join();
+//					T2.join();
+//					T3.join();
+//					T4.join();
+				}
+				catch(Exception ex)
+				{
+					System.out.println(ex.getMessage());
+				}
 			}
 			repaint();
 		}
