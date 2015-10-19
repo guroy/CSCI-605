@@ -14,7 +14,6 @@ package exercise.n2;
 // original from: http://rosettacode.org/wiki/Mandelbrot_set#Java
 // modified for color
 import java.awt.image.BufferedImage;
-import java.awt.Color;
 
 public class pixelThread extends Thread 
 {
