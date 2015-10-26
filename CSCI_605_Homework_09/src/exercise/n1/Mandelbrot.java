@@ -36,47 +36,14 @@ public class Mandelbrot extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
-	public void createSet()	{
+	public void createSet()	
+	{
 		theImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
-		int nbProc = Runtime.getRuntime().availableProcessors();
 		//ExecutorService threadPool = Executors.newFixedThreadPool(nbProc);
-		Thread[] multiT = new Thread[nbProc];
-		for (int y = 0; y < getHeight(); y++)
-		{
-			for (int x = 0; x < getWidth()-nbProc; x+=nbProc) 
-			{
-				for(int i = 0; i < nbProc; i++)
-				{
-					multiT[i] = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x+i, y, colors, theImage));
-					multiT[i].start();
-				}
-//				Thread T1 = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x, y, colors, theImage));
-//				Thread T2 = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x+1, y, colors, theImage));
-//				Thread T3 = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x+2, y, colors, theImage));
-//				Thread T4 = new Thread(new pixelThread(MAX, LENGTH, ZOOM, x+3, y, colors, theImage));
-				
-//				T1.start();
-//				T2.start();
-//				T3.start();
-//				T4.start();
-				try
-				{
-					for(int i = 0; i < nbProc; i++)
-					{
-						multiT[i].join();
-					}
-//					T1.join();
-//					T2.join();
-//					T3.join();
-//					T4.join();
-				}
-				catch(Exception ex)
-				{
-					System.out.println(ex.getMessage());
-				}
-			}
-			repaint();
-		}
+		ThreadManager manager = new ThreadManager(LENGTH,LENGTH);
+		new pixelThread(MAX, LENGTH, ZOOM, colors, theImage, manager).start();
+		repaint();
+		System.out.println(manager.nbThread);
 	}
 	public void initColors() {
 		for (int index = 0; index < MAX; index++) {

@@ -23,26 +23,67 @@ public class pixelThread extends Thread
 	private int x, y;
 	private int[] colors;
 	private BufferedImage theImage;
+	private ThreadManager manager;
 	
-	public pixelThread(int max, int length, double zoom, int xin, int yin,int[] col, BufferedImage Img)
+	public pixelThread(int max, int length, double zoom,int[] col, BufferedImage Img, ThreadManager man)
 	{
 		MAX = max;
 		LENGTH = length;
 		ZOOM = zoom;
-		x = xin;
-		y = yin;
+		x = man.x;
+		y = man.y;
 		colors = col;
 		theImage = Img;
+		manager = man;
+		man.nbThread++;
 	}
 
 	public void run()
 	{
+
+		while(!manager.isFinished())
+		{
+
+			synchronized(manager)
+			{
+				manager.notify();
+				x = manager.x;
+				y = manager.y;
+				manager.newLine();
+				int iter = setIter();
+
+				if(iter >= MAX)
+				{
+					iter = 1;
+				}
+				setImg(iter);
+
+				try
+				{
+					System.out.println(manager.x + " " +manager.y);
+					if(!manager.isFinished() && manager.nbThread < 50)
+					{
+						new pixelThread(MAX, LENGTH, ZOOM, colors, theImage, manager).start();	
+					}
+					manager.wait();
+				}
+				catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private synchronized int setIter()
+	{
 		double zx, zy, cX, cY;
+		double tmp;
+		int iter = 0;
+		
 		zx = zy = 0;
 		cX = (x - LENGTH) / ZOOM;
 		cY = (y - LENGTH) / ZOOM;
-		int iter = 0;
-		double tmp;
 		while ( (zx * zx + zy * zy < 10 ) && ( iter < MAX - 1 ) ) 
 		{	// this is the part for the parallel part
 			tmp = zx * zx - zy * zy + cX;				// this is the part for the parallel part
@@ -50,7 +91,7 @@ public class pixelThread extends Thread
 			zx = tmp;							// this is the part for the parallel part
 			iter++;							// this is the part for the parallel part
 		}								// this is the part for the parallel part
-		setImg(iter);
+		return iter;
 	}
 	
 	private synchronized void setImg(int iter)
