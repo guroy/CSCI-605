@@ -19,7 +19,14 @@ public class deadlock extends Thread
 	{
 			synchronized(o1)
 			{
-				System.out.println("o1 is locked by " + name);
+				if(name == "0")
+				{
+					System.out.println(name + " locked o1");
+				}
+				else
+				{
+					System.out.println(name + " locked o2");
+				}
 				try
 				{
 					synchronized(stop)
@@ -37,17 +44,46 @@ public class deadlock extends Thread
 							stop.notify();
 						}// end else
 					}//end synchronization on stop
-					System.out.println(name + " is waiting for o2");
+					
+					//_____________________________________
+					//Solution to deadlock
+					//_____________________________________
+					if(name == "0")
+					{
+						System.out.println(name + " is waiting for o2");
+					}
+					else
+					{
+						System.out.println(name + " is waiting for o1 and release o2");
+						o1.wait();
+						System.out.println(name + " get released from wait");
+					}
+					//______________________________________
 					synchronized(o2)
 					{
-						System.out.println(name + " get o2");
-						System.out.println("I will not get there until someone use notify properly");
+						//_____________________________________
+						//Solution to deadlock
+						//_____________________________________
+						o2.notify();
+						//_____________________________________
+						if(name == "0")
+						{
+							System.out.println(name + " get o2");
+						}
+						else
+						{
+							System.out.println(name + " get o1");
+						}
+						System.out.println("I will not get there until someone use notify properly => " + name);
 					}// end synchronization on o2
+					System.out.println(name + " Finished");
+
 				}//end try
 				catch(Exception e)
 				{
 					System.err.println("something go wrong in thread " + name);
 				}
+				
 			}//end sync o1
 	}//end run
 	
