@@ -19,7 +19,7 @@ public class Truck extends Thread
 	{
 		synchronized(road)
 		{
-			if()
+			if(true)
 			System.out.println("Truck"+id+" is crossing the bridge");
 			try
 			{
