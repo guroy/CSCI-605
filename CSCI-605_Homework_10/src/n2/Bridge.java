@@ -4,17 +4,17 @@ import java.util.Vector;
 
 public class Bridge 
 {
-	private Vector<Truck> waitingTrucks;
-	private Vector<Truck> crossingTrucks;
 	private volatile int mass;
 	private volatile int nbTruck;
 	public final static int MAX_MASS = 200000;
 	public final static int MAX_TRUCKS = 4;
+	public static int nbWaitingTruck = 0;
 	
 	Bridge()
 	{
 		mass = 0;
 		nbTruck = 0;
+		
 	}
 	
 	//getMass, return the mass on the bridge
@@ -70,38 +70,30 @@ public class Bridge
 			return false;
 		}
 	}
-	//addTruckWait, add truck to  the waiting list
-	public void addTruckWait(Truck trck)
-	{
-		waitingTrucks.add(trck);
-	}
 	
 	//addTruckCrossing, add the truck trck to the crossing list
 	public void addTruckCrossing(Truck trck)
 	{
-		if(addMass(trck.mass))
-		{
-			if(incNbTruck())
-			{
-				crossingTrucks.add(trck);
-				waitingTrucks.remove(trck);
-			}
-			else
-			{
-				addMass(-trck.mass);
-			}
-		}
-		else
-		{
-			addTruckWait(trck);
-		}
+		incNbTruck();
+		addMass(trck.mass);
+		trck.start();
 	}
 	
 	//removeTruckCrossing, remove the truck trck from the crossing road
 	public void removeTruckCrossing(Truck trck)
 	{
-		crossingTrucks.remove(trck);
-		addMass(-trck.mass);
-		decNbTruck();
+		try
+		{
+//			crossingTrucks.remove(trck);
+			addMass(-trck.mass);
+			decNbTruck();
+//			waitingTrucks.remove(trck);
+			System.err.println("Truck remove, nb truck on the bridge: " + nbTruck+"\n");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error when deleting truck"+trck.id+" from the crossing list");
+			System.out.println(e.getMessage());
+		}
 	}
 }

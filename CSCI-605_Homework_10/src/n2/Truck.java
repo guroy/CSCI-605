@@ -19,18 +19,33 @@ public class Truck extends Thread
 	{
 		synchronized(road)
 		{
-			if(true)
-			System.out.println("Truck"+id+" is crossing the bridge");
-			try
+			if(road.getMass() > Bridge.MAX_MASS || road.getnbTruck() > Bridge.MAX_TRUCKS)
 			{
-				sleep(1000);
+				Bridge.nbWaitingTruck++;
+				try 
+				{
+					road.wait();
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
 			}
-			catch(InterruptedException e)
-			{
-				System.out.println("Truck"+id+" had a problem on the bridge");
-			}
-			System.out.println("Truck"+id+" have crossed the bridge");
+			road.notify();
 		}
-	}
 
+		Bridge.nbWaitingTruck--;
+		System.out.println("Truck"+id+" is crossing the bridge");
+
+		try
+		{
+			sleep(1000);
+		}
+		catch(InterruptedException e)
+		{
+			System.out.println("Truck"+id+" had a problem on the bridge");
+		}
+		System.out.println("Truck"+id+" have crossed the bridge");
+		road.removeTruckCrossing(this);
+	}
 }
