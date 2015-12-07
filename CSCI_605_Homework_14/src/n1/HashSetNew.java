@@ -26,19 +26,34 @@ public class HashSetNew<E> extends HashSet<E> {
 
 	public boolean add(E e) {
 		// we need to be sure that the element does not already exist
-		if (!contains(e)) {
-			size++;
+		if (!contains(e) && table.length * 2 < MAX_CAPACITY) {
+			table[size++] = e;
+			if (size > threshold) {
+				Object[] table_tmp = new Object[table.length * 2];
+				for (int i = 0; i < size; i++) {
+					table_tmp[i] = table[i];
+				}
+				// reallocate the table
+				table = table_tmp;
+				threshold = (int) (table.length * LOAD_FACTOR);
+			}
 			return true;
 		}
 		return false;
 	}
 	
 	public void clear() {
-		
+		table = new Object [table.length];
+		size = 0;
 	}
 	
 	public boolean contains(Object o) {
-		return true;
+		for (int i = 0; i < size; i++) {
+			if (table[i] == o) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public boolean isEmpty() {
@@ -51,8 +66,12 @@ public class HashSetNew<E> extends HashSet<E> {
 	
 	public boolean remove(Object o) {
 		if (contains(o)) {
-			size--;
-			return true;
+			for (int i = 0; i < size; i++) {
+				if (table[i] == o) {
+					table[i] = table[size--];
+					return true;
+				}
+			}
 		}
 		return false;
 	}
