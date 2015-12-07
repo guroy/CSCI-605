@@ -60,8 +60,36 @@ public class HashSetNew<E> extends HashSet<E> {
 		return size == 0;
 	}
 	
+	public class HashIterator<E> implements Iterator<E> {
+		int index;
+		E next;
+		Object curr;
+		public boolean hasNext() {
+			while (index++ < size && table[index] == null);
+			
+			if (index < size) {
+				return true;
+			}
+			
+			return false;
+		}
+		
+		@SuppressWarnings("unchecked")
+		public E next() {
+			if(hasNext()) {
+				return (E) table[index];
+			}
+			return null;
+		}	
+	}
+	
+	@SuppressWarnings("unchecked")
 	public Iterator<E> iterator() {
-		return null;
+		HashIterator<E> it = new HashIterator<E>();
+		it.index = 0;
+		it.curr = table[0];
+		it.next = (size > 1) ? (E) table[1] : null;
+		return it;
 	}
 	
 	public boolean remove(Object o) {
